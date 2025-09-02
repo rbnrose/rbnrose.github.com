@@ -1,165 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rian Ross - Bebeeeee</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Rian Ross — Bebee</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Preload hero image (🔧 make sure the path matches your file location) -->
+  <link rel="preload" as="image" href="assets/rian-ross-hero.jpg" imagesrcset="assets/rian-ross-hero.jpg 1x">
+
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.8;
-      transition: line-height 0.3s ease-in-out;
+    :root{
+      --brand:#00f2fe;
+      --ink:#2c3e50;
     }
-    body.compact {
-      line-height: 1.4;
+    *{box-sizing:border-box}
+    body{
+      font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:#f7f8fc;
+      color:#333;
+      line-height:1.8;           /* readable default */
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      transition:line-height .2s ease;
     }
-    .hero {
-      background: url("WhatsApp Image 2025-09-02 at 8.45.13 AM.jpeg") no-repeat center center/cover;
-      color: white;
-      text-align: center;
-      padding: 180px 20px;
-      position: relative;
+    body.compact{ line-height:1.4 } /* compact mode */
+
+    /* --- Navbar --- */
+    .navbar{
+      backdrop-filter:saturate(120%) blur(8px);
+      background:rgba(255,255,255,.75);
+      box-shadow:0 6px 24px rgba(0,0,0,.06);
     }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 0;
+    .navbar .navbar-brand{
+      font-weight:700; letter-spacing:.3px; color:var(--ink);
     }
-    .hero-content {
-      position: relative;
-      z-index: 1;
+
+    /* --- Hero uses <img> as real background for reliable loading --- */
+    .hero{
+      position:relative;
+      min-height:72vh;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      overflow:hidden;
+      border-bottom-left-radius:28px;
+      border-bottom-right-radius:28px;
+      box-shadow:0 20px 40px rgba(0,0,0,.12);
     }
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
+    .hero img.hero-bg{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover; object-position:center;
+      transform:scale(1.05);
+      filter:contrast(1.05) saturate(1.05);
     }
-    .hero p {
-      font-size: 1.2rem;
-      margin-top: 15px;
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.45));
     }
-    .section-title {
-      text-align: center;
-      margin-bottom: 50px;
-      font-weight: bold;
-      font-size: 2.2rem;
-      color: #2c3e50;
+    .hero .content{ position:relative; z-index:1; color:#fff; padding:0 1rem; }
+    .hero h1{ font-size:clamp(2.2rem, 5vw, 3.6rem); font-weight:800; }
+    .hero p.lead{ font-size:clamp(1rem, 2.2vw, 1.25rem); opacity:.95; }
+    .btn-ghost{
+      background:#fff; color:#111; border:none; font-weight:600;
+      padding:.85rem 1.25rem; border-radius:12px;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
     }
-    .card {
-      border: none;
-      border-radius: 15px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
+    .btn-ghost:hover{ transform:translateY(-2px); }
+
+    .section-title{
+      text-align:center; color:var(--ink); font-weight:800;
+      font-size:clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom:2.2rem;
     }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+
+    /* Cards */
+    .card{
+      border:0; border-radius:18px; overflow:hidden;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      transition:transform .25s ease, box-shadow .25s ease;
+      background:#fff;
     }
-    .card img {
-      height: 250px;
-      object-fit: cover;
+    .card:hover{ transform:translateY(-6px); box-shadow:0 16px 34px rgba(0,0,0,.12); }
+    .card img{ height:260px; object-fit:cover; }
+    .badge-soft{
+      background:rgba(0,242,254,.12); color:#007c85; border-radius:999px; padding:.35rem .7rem; font-weight:600;
     }
-    footer {
-      background: #2c3e50;
-      color: white;
-      padding: 20px 0;
-      text-align: center;
+
+    footer{
+      background:#111827; color:#e5e7eb; padding:28px 0; text-align:center; margin-top:40px;
     }
-    .highlight {
-      color: #00f2fe;
-      font-weight: 600;
+
+    /* Floating toggle */
+    .toggle-btn{
+      position:fixed; right:18px; bottom:18px; z-index:9999;
+      border-radius:999px; box-shadow:0 10px 24px rgba(0,0,0,.15);
     }
-    .toggle-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 999;
-    }
+
+    /* Subtle container width bump */
+    .container { max-width:1120px; }
   </style>
 </head>
 <body>
 
-  <!-- Toggle Compact Mode -->
-  <button class="btn btn-dark toggle-btn" onclick="toggleCompact()">Toggle Compact Line Height</button>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Hello, I'm <span class="highlight">Rian Ross</span></h1>
-      <p>A personal space to share about myself and my family</p>
-      <a href="#about" class="btn btn-light btn-lg mt-3 shadow">Know More</a>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="container py-5">
-    <h2 class="section-title">About Me</h2>
-    <p class="text-center">Hi, I'm <strong>Rian Ross</strong>. This is my personal website where I share a glimpse of my life, my family, and my journey. I believe in living with passion, learning new things every day, and cherishing the people around me.</p>
-  </section>
-
-  <!-- Family Section -->
-  <section class="container py-5">
-    <h2 class="section-title">My Family</h2>
-    <div class="row g-4">
-      <div class="col-md-6">
-        <div class="card shadow-sm">
-          <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e" class="card-img-top" alt="Father">
-          <div class="card-body text-center">
-            <h5 class="card-title">Ruban</h5>
-            <p class="card-text">My father, a dedicated <strong>Business Development Manager</strong>, who inspires me with his vision and determination.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card shadow-sm">
-          <img src="https://images.unsplash.com/photo-1588776814546-ec7c4c4e3c7c" class="card-img-top" alt="Mother">
-          <div class="card-body text-center">
-            <h5 class="card-title">Ramya</h5>
-            <p class="card-text">My mother, a caring and skilled <strong>Physiotherapist</strong>, who always encourages health, balance, and happiness in life.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Interests Section -->
-  <section class="container py-5">
-    <h2 class="section-title">My Interests</h2>
-    <div class="row text-center">
-      <div class="col-md-4">
-        <h5>🎶 Music</h5>
-        <p>I enjoy exploring different genres of music and relaxing with soulful melodies.</p>
-      </div>
-      <div class="col-md-4">
-        <h5>📚 Learning</h5>
-        <p>I’m always curious and love learning new skills that help me grow.</p>
-      </div>
-      <div class="col-md-4">
-        <h5>🌍 Travel</h5>
-        <p>Discovering new places and experiencing diverse cultures excites me.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="container py-5">
-    <h2 class="section-title">Get in Touch</h2>
-    <form class="row g-3">
-      <div class="col-md-6">
-        <label for="name" class="form-label">Your Name</label>
-        <input type="text" class="form-control" id="name" required>
-      </div>
-      <div class="col-md-6">
-        <label for="email" class="form-label">Your Email</label>
-        <input type="email" class="form-control" id="email" required>
-      </div>
-      <div class="col-12">
-        <label for="message" class="form-label">Message</label>
-        <textarea class="form-control" id="message" rows="4" required></textarea>
-      </div>
-      <div class="col-12
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Rian Ross</a>
+      <b
